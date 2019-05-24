@@ -31,9 +31,6 @@ class MyParser:
 	def next_token(self):
 		return self.scanner.read()
 
-	def next_token(self):
-		return self.scanner.read()
-
 	def match(self,token):
 		if self.la==token:
 			self.la,self.text=self.next_token()
