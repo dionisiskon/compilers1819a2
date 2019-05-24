@@ -13,7 +13,6 @@ class MyParser:
 		bit = plex.Range('01')
 		bits = bit + plex.Rep(bit)
 		keyword = plex.Str('print','PRINT')
-		space = plex.Any(" \n\t")
 		operator=plex.Str('=','^','&','|')
 		self.lexicon = plex.Lexicon([
 			(operator,plex.TEXT),
