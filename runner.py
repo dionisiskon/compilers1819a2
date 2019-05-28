@@ -17,7 +17,7 @@ class MyParser:
 		bits = plex.Rep1(bit)
 		keyword = plex.Str('print','PRINT')
 		space = plex.Any(" \n\t")
-		operator=plex.Str('=','^','&','|')
+		operator=plex.Str('=','xor','and','or')
 		self.st = {}
 		self.lexicon = plex.Lexicon([
 			(operator,plex.TEXT),
@@ -39,7 +39,7 @@ class MyParser:
 		if self.la==token:
 			self.la,self.text=self.next_token()
 		else:
-			raise ParseError("perimenw ! ? (")
+			raise ParseError("perimenw (")
 
 	def parse(self,fp):
 		self.create_scanner(fp)
@@ -69,8 +69,8 @@ class MyParser:
 	def expr(self):
 		if self.la == '(' or self.la == 'IDENTIFIER' or self.la == 'BIT_TOKEN':
 			t = self.term()
-			while self.la == '^':
-				self.match('^')
+			while self.la == 'xor':
+				self.match('xor')
 				t2 = self.term()
 				t ^= t2
 			if self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
@@ -82,11 +82,11 @@ class MyParser:
 	def term(self):
 		if self.la=='(' or self.la=='IDENTIFIER' or self.la == 'BIT_TOKEN':	
 			t=self.factor()
-			while self.la == '|':
-				self.match('|')
+			while self.la == 'or':
+				self.match('or')
 				t2 = self.factor()
 				t |= t2
-			if self.la == '^' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la==')':
+			if self.la == 'xor' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la==')':
 				return t
 			else:
 				print(self.la)
@@ -96,11 +96,11 @@ class MyParser:
 	def factor(self):
 		if self.la=='(' or self.la == 'IDENTIFIER' or self.la == 'BIT_TOKEN':
 			t=self.atom()
-			while self.la == '&':
-				self.match('&')
+			while self.la == 'and':
+				self.match('and')
 				t2 = self.atom()
 				t &= t2
-			if self.la == '^' or self.la == '|' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la==')':
+			if self.la == 'xor' or self.la == 'or' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la==')':
 				return t
 			else:
 				print(self.la)

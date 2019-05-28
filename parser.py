@@ -15,7 +15,7 @@ class MyParser:
 		bits = plex.Rep1(bit)
 		keyword = plex.Str('print','PRINT')
 		space = plex.Any(" \n\t")
-		operator=plex.Str('=','^','&','|')
+		operator=plex.Str('=','xor','and','or')
 		self.lexicon = plex.Lexicon([
 			(operator,plex.TEXT),
 			(bits, 'BIT_TOKEN'),
@@ -67,8 +67,8 @@ class MyParser:
 		else:
 			raise ParseError("perimenw ( or IDENTIFIER or BIT_TOKEN or )")
 	def term_tail(self):	
-		if self.la == '^':
-			self.match('^')
+		if self.la == 'xor':
+			self.match('xor')
 			self.term()
 			self.term_tail()
 		elif self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
@@ -82,11 +82,11 @@ class MyParser:
 		else:
 			raise ParseError("perimenw ( or IDENTIFIER or )")
 	def factor_tail(self):
-		if self.la == '|':
-			self.match('|')
+		if self.la == 'or':
+			self.match('or')
 			self.factor()
 			self.factor_tail()
-		elif self.la == '^' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
+		elif self.la == 'xor' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
 			return
 		else:
 			raise ParseError("perimenw |")
@@ -97,11 +97,11 @@ class MyParser:
 		else:
 			raise ParseError("perimenw id,bit h (")
 	def atom_tail(self):
-		if self.la == '&':
-			self.match('&')
+		if self.la == 'and':
+			self.match('and')
 			self.atom()
 			self.atom_tail()
-		elif self.la == '|' or self.la == '^' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
+		elif self.la == 'or' or self.la == 'xor' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
 			return
 		else:
 			raise ParseError("perimenw &")
