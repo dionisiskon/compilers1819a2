@@ -74,7 +74,7 @@ class MyParser:
 		elif self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
 			return
 		else:
-			raise ParseError("perimenw ^")
+			raise ParseError("perimenw xor")
 	def term(self):
 		if self.la == '(' or self.la == 'IDENTIFIER' or self.la == 'BIT_TOKEN':	
 			self.factor()
@@ -89,7 +89,7 @@ class MyParser:
 		elif self.la == 'xor' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
 			return
 		else:
-			raise ParseError("perimenw |")
+			raise ParseError("perimenw or")
 	def factor(self):
 		if self.la == '(' or self.la == 'IDENTIFIER' or self.la == 'BIT_TOKEN':
 			self.atom()
@@ -104,7 +104,7 @@ class MyParser:
 		elif self.la == 'or' or self.la == 'xor' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
 			return
 		else:
-			raise ParseError("perimenw &")
+			raise ParseError("perimenw and")
 	def atom(self):
 		if self.la == '(':
 			self.match('(')
