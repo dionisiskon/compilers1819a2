@@ -39,7 +39,7 @@ class MyParser:
 		if self.la==token:
 			self.la,self.text=self.next_token()
 		else:
-			raise ParseError("perimenw (")
+			raise ParseError("perimenw )")
 
 	def parse(self,fp):
 		self.create_scanner(fp)
