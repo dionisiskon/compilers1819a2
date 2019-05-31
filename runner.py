@@ -17,10 +17,16 @@ class MyParser:
 		bits = plex.Rep1(bit)
 		keyword = plex.Str('print','PRINT')
 		space = plex.Any(" \n\t")
-		operator=plex.Str('=','xor','and','or')
+		equal=plex.Str('=')
+		XOR = plex.Str('xor')
+		OR = plex.Str('or')
+		AND = plex.Str('and')
 		self.st = {}
 		self.lexicon = plex.Lexicon([
-			(operator,plex.TEXT),
+			(equal,plex.TEXT),
+			(XOR,plex.TEXT),
+			(OR,plex.TEXT),
+			(AND,plex.TEXT),
 			(bits, 'BIT_TOKEN'),
 			(keyword,'PRINT'),
 			(paren,plex.TEXT),
