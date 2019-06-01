@@ -45,7 +45,7 @@ class MyParser:
 		if self.la==token:
 			self.la,self.text=self.next_token()
 		else:
-			raise ParseError("perimenw )")
+			raise ParseError("Please provide )")
 
 	def parse(self,fp):
 		self.create_scanner(fp)
@@ -58,7 +58,7 @@ class MyParser:
 		elif self.la==None:
 			return
 		else:
-			raise ParseError("perimenw IDENTIFIER or Print")
+			raise ParseError("Please provide IDENTIFIER or Print")
 	def stmt(self):
 		if self.la == 'IDENTIFIER':
 			varname = self.text
@@ -71,7 +71,7 @@ class MyParser:
 			e = self.expr()
 			print('{:b}'.format(e))
 		else:
-			raise ParseError("perimenw IDENTIFIER or PRINT")
+			raise ParseError("Please provide IDENTIFIER or PRINT")
 	def expr(self):
 		if self.la == '(' or self.la == 'IDENTIFIER' or self.la == 'BIT_TOKEN':
 			t = self.term()
@@ -82,7 +82,7 @@ class MyParser:
 			if self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
 					return t
 			else:
-					raise ParseError("perimenw ^")
+					raise ParseError("Please provide xor")
 		else:
 			raise ParseError("perimenw ( or IDENTIFIER or BIT_TOKEN or )")
 	def term(self):
@@ -96,9 +96,9 @@ class MyParser:
 				return t
 			else:
 				print(self.la)
-				raise ParseError("perimenw ( or IDENTIFIER or BIT_TOKEN or )")
+				raise ParseError("Please provide ( or IDENTIFIER or BIT_TOKEN or )")
 		else:
-			raise ParseError("perimenw * or /")
+			raise ParseError("Please provide or ")
 	def factor(self):
 		if self.la=='(' or self.la == 'IDENTIFIER' or self.la == 'BIT_TOKEN':
 			t=self.atom()
@@ -110,9 +110,9 @@ class MyParser:
 				return t
 			else:
 				print(self.la)
-				raise ParseError("perimenw ( or IDENTIFIER or BIT_TOKEN or )")
+				raise ParseError("Please provide ( or IDENTIFIER or BIT_TOKEN or )")
 		else:
-			raise ParseError("perimenw id,bit h (")
+			raise ParseError("Please provide id,bit h (")
 	def atom(self):
 		if self.la=='(':
 			self.match('(')
@@ -124,12 +124,13 @@ class MyParser:
 			self.match('IDENTIFIER')
 			if varname in self.st:
 				return self.st[varname]
+			raise ParseRun("Please provide an id that's already been initialized")
 		elif self.la=='BIT_TOKEN':
 			value=int(self.text,2)
 			self.match('BIT_TOKEN')
 			return value
 		else:
-			raise ParseError("perimenw id bit or (")
+			raise ParseError("Please provide id bit or (")
 parser = MyParser()
 with open('test.txt','r') as fp:
 	parser.parse(fp)

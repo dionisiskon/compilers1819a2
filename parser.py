@@ -42,7 +42,7 @@ class MyParser:
 		if self.la == token:
 			self.la,self.text=self.next_token()
 		else:
-			raise ParseError("perimenw (")
+			raise ParseError("Please provide (")
 
 	def parse(self,fp):
 		self.create_scanner(fp)
@@ -55,7 +55,7 @@ class MyParser:
 		elif self.la == None:
 			return
 		else:
-			raise ParseError("perimenw IDENTIFIER or Print")
+			raise ParseError("Please provide IDENTIFIER or Print")
 	def stmt(self):
 		if self.la == 'IDENTIFIER':
 			self.match('IDENTIFIER')	
@@ -65,13 +65,13 @@ class MyParser:
 			self.match('PRINT')
 			self.expr()
 		else:
-			raise ParseError("perimenw IDENTIFIER or PRINT")
+			raise ParseError("Please provide IDENTIFIER or PRINT")
 	def expr(self):
 		if self.la == '(' or self.la == 'IDENTIFIER' or self.la == 'BIT_TOKEN':
 			self.term()
 			self.term_tail()
 		else:
-			raise ParseError("perimenw ( or IDENTIFIER or BIT_TOKEN or )")
+			raise ParseError("Please provide ( or IDENTIFIER or BIT_TOKEN or )")
 	def term_tail(self):	
 		if self.la == 'xor':
 			self.match('xor')
@@ -80,13 +80,13 @@ class MyParser:
 		elif self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
 			return
 		else:
-			raise ParseError("perimenw xor")
+			raise ParseError("Please provide xor")
 	def term(self):
 		if self.la == '(' or self.la == 'IDENTIFIER' or self.la == 'BIT_TOKEN':	
 			self.factor()
 			self.factor_tail()
 		else:
-			raise ParseError("perimenw ( or IDENTIFIER or )")
+			raise ParseError("Please provide (,IDENTIFIER or )")
 	def factor_tail(self):
 		if self.la == 'or':
 			self.match('or')
@@ -95,13 +95,13 @@ class MyParser:
 		elif self.la == 'xor' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
 			return
 		else:
-			raise ParseError("perimenw or")
+			raise ParseError("Please provide or")
 	def factor(self):
 		if self.la == '(' or self.la == 'IDENTIFIER' or self.la == 'BIT_TOKEN':
 			self.atom()
 			self.atom_tail()
 		else:
-			raise ParseError("perimenw id,bit h (")
+			raise ParseError("Please provide id,bit h (")
 	def atom_tail(self):
 		if self.la == 'and':
 			self.match('and')
@@ -110,7 +110,7 @@ class MyParser:
 		elif self.la == 'or' or self.la == 'xor' or self.la == 'IDENTIFIER' or self.la == 'PRINT' or self.la == None or self.la == ')':
 			return
 		else:
-			raise ParseError("perimenw and")
+			raise ParseError("Please provide and")
 	def atom(self):
 		if self.la == '(':
 			self.match('(')
@@ -121,7 +121,7 @@ class MyParser:
 		elif self.la == 'BIT_TOKEN':
 			self.match('BIT_TOKEN')
 		else:
-			raise ParseError("perimenw id bit or (")
+			raise ParseError("Please provide id bit or (")
 
 parser = MyParser()
 with open('test.txt','r') as fp:
